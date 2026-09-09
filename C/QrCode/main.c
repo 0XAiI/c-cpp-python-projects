@@ -115,7 +115,6 @@ int main(void) {
 
   if (!success) {
     fprintf(stderr, "Error generating QR code\n");
-    free(qr_code_text);
     fclose(filepointer);
     return EXIT_FAILURE;
   }
@@ -125,19 +124,16 @@ int main(void) {
 
   struct TinyPngOut writer;
   if (!init_tinypng_output(&writer, size * SCALE, size * SCALE, filepointer)) {
-    free(qr_code_text);
     fclose(filepointer);
     return EXIT_FAILURE;
   }
 
   if (!create_qrcode_image(&writer, qr_code, size)) {
     fprintf(stderr, "Error creating QR code image\n");
-    free(qr_code_text);
     fclose(filepointer);
     return EXIT_FAILURE;
   }
 
-  free(qr_code_text);
   fclose(filepointer);
 
   printf("QR code saved to %s\n", filepath);

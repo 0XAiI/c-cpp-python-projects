@@ -1,26 +1,19 @@
 CC = clang
-# Use --driver-mode=cl to match your .clangd settings
-CFLAGS = --driver-mode=cl -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -g
 
-# vcpkg path configuration
-VCPKG_ROOT = C:/Users/Ilyes/vcpkg/installed/x64-windows
-VCPKG_INC  = /I"$(VCPKG_ROOT)/include"
-VCPKG_LIB  = /link /LIBPATH:"$(VCPKG_ROOT)/lib"
-
-# Source files (Added qrcodegen.c since it's in your current directory)
+# Source files (qrcodegen.c is compiled directly, not linked separately)
 SRC = main.c TinyPngOut.c qrcodegen.c
 EXEC = main
 
 ifeq ($(OS),Windows_NT)
     EXEC := $(EXEC).exe
     RM = del /f /q
-    # Windows Linker flags (vcpkg libs + windows system libraries if needed)
-    LDFLAGS = $(VCPKG_LIB) cs50.lib
-    INCLUDES = $(VCPKG_INC) /I"."
+    INCLUDES = -I cs50/include
+    LDFLAGS = cs50.lib
 else
     RM = rm -f
-    LDFLAGS = -lcs50 -lqrcodegen
-    INCLUDES =
+    INCLUDES = -I. -I/usr/local/include
+    LDFLAGS = -L/usr/local/lib -lcs50
 endif
 
 all:

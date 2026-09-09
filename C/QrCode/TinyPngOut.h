@@ -21,6 +21,19 @@
 
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
+// C++ has no "static" array size qualifier; drop it.
+#define TPO_DYN_ARR(p) p[1]
+#define TPO_FIX_ARR(p) p[4]
+#else
+#define TPO_DYN_ARR(p) p[static 1]
+#define TPO_FIX_ARR(p) p[static 4]
+#endif
+
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -61,7 +74,7 @@ enum TinyPngOut_Status {
  * TinyPngOut will leave the output stream still open once it finishes writing the PNG file data.
  * Returns an error if the dimensions exceed certain limits (e.g. w * h > 700 million).
  */
-enum TinyPngOut_Status TinyPngOut_init(struct TinyPngOut this[static 1], uint32_t w, uint32_t h, FILE out[static 1]);
+enum TinyPngOut_Status TinyPngOut_init(TPO_DYN_ARR(struct TinyPngOut self), uint32_t w, uint32_t h, TPO_DYN_ARR(FILE out));
 
 
 /* 
@@ -72,4 +85,8 @@ enum TinyPngOut_Status TinyPngOut_init(struct TinyPngOut this[static 1], uint32_
  * Once exactly width*height pixels have been written with this TinyPngOut object,
  * there are no more valid operations on the object and it should be discarded.
  */
-enum TinyPngOut_Status TinyPngOut_write(struct TinyPngOut this[static 1], const uint8_t pixels[], size_t count);
+enum TinyPngOut_Status TinyPngOut_write(TPO_DYN_ARR(struct TinyPngOut self), const uint8_t pixels[], size_t count);
+
+#ifdef __cplusplus
+}
+#endif

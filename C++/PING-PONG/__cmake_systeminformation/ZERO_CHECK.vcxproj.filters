@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Ilyes\Desktop\Projects\C++\PING-PONG\__cmake_systeminformation\CMakeFiles\87412f72ba9dc1a2ac0ac81b23b0e23c\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{E7FFF4D1-8123-3BF3-A620-DAC61569497B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

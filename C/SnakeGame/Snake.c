@@ -61,9 +61,9 @@ Vector2 generate_random_position(int width, int height, Snake *snake,
 
     valid_position = true;
     for (int i = 0; i < state->body_length; i++) {
-      if (CheckCollisionPointRec(pos,
-                                 (Rectangle){state->body[i].x, state->body[i].y,
-                                             snake->width, snake->height})) {
+      if (CheckCollisionPointRec(
+              pos, (Rectangle){state->body[i].x, state->body[i].y,
+                               (float)snake->width, (float)snake->height})) {
         valid_position = false;
         break;
       }
@@ -117,8 +117,8 @@ void update_game_state(GameState *state, Snake *snake, Vector2 *food) {
   state->body[0] = (Vector2){snake->pos_x, snake->pos_y};
 
   // Check food collision
-  Rectangle snake_head = {snake->pos_x, snake->pos_y, snake->width,
-                          snake->height};
+  Rectangle snake_head = {snake->pos_x, snake->pos_y, (float)snake->width,
+                          (float)snake->height};
   if (CheckCollisionCircleRec(*food, RADIUS, snake_head)) {
     state->score += 50;
 

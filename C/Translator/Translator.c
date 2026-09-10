@@ -1,11 +1,11 @@
 #include <cs50.h>
 #include <curl/curl.h>
 #include <curl/easy.h>
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <string.h>
 
 #define MAX_URL_LEN 512
@@ -73,7 +73,7 @@ bool init_chunk(MemoryStruct *mem) {
     return false;
   }
 
-  mem->memory = malloc(1);
+  mem->memory = (char *)malloc(1);
   if (mem->memory == NULL) {
     fprintf(stderr, "Memory allocation failed\n");
     return false;
@@ -88,7 +88,7 @@ static size_t write_memory_callback(void *contents, size_t size, size_t nmemb,
   size_t new_size = size * nmemb;
   MemoryStruct *mem = (MemoryStruct *)userp;
 
-  char *ptr = realloc(mem->memory, mem->size + new_size + 1);
+  char *ptr = (char *)realloc(mem->memory, mem->size + new_size + 1);
   if (ptr == NULL) {
     fprintf(stderr, "Memory reallocation failed\n");
     return 0;

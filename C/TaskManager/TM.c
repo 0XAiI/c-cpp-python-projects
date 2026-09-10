@@ -107,15 +107,15 @@ void draw_tasks(Font font) {
   for (int i = 0; i < task_count; i++) {
     int y = CHECK_RECTANGLE.y + i * 40;
 
-    Rectangle checkbox = {CHECK_RECTANGLE.x, y, 20, 20};
+    Rectangle checkbox = {CHECK_RECTANGLE.x, (float)y, 20, 20};
     DrawRectangleLinesEx(checkbox, 2, DARKGRAY);
 
     if (tasks[i].done) {
       DrawRectangleRec(checkbox, DARKGREEN);
     }
 
-    DrawTextEx(font, tasks[i].text, (Vector2){checkbox.x + 30, y + 2}, 20, 1,
-               BLACK);
+    DrawTextEx(font, tasks[i].text, (Vector2){checkbox.x + 30, (float)y + 2},
+               20, 1, BLACK);
 
     Vector2 mouse = GetMousePosition();
     if (CheckCollisionPointRec(mouse, checkbox)) {

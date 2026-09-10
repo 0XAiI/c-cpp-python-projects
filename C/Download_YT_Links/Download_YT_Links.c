@@ -29,7 +29,7 @@ void get_unique_output(char *buffer, const char *extension) {
 
   for (int i = 0; i < 100; i++) {
     snprintf(buffer, MAX_PATH, "Music/video%d.%s", i, extension);
- }
+  }
 
   snprintf(buffer, MAX_PATH, "./Music/default_output.%s", extension);
 }

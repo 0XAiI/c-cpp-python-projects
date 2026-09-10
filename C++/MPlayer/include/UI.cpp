@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <windows.h>
 #include <commdlg.h>
+#include <windows.h>
 
 #include <iostream>
 #include <string>
@@ -15,10 +15,12 @@ std::string UI::Menu() {
   char fileName[MAX_PATH] = {};
 
   const char *userProfile = std::getenv("USERPROFILE");
-  std::string initialDir = userProfile ? std::string(userProfile) + "\\Music" : "";
+  std::string initialDir =
+      userProfile ? std::string(userProfile) + "\\Music" : "";
 
   ofn.lStructSize = sizeof(ofn);
-  ofn.lpstrFilter = "Audio Files\0*.mp3;*.wav;*.flac;*.ogg;*.mp4\0All Files\0*.*\0";
+  ofn.lpstrFilter =
+      "Audio Files\0*.mp3;*.wav;*.flac;*.ogg;*.mp4\0All Files\0*.*\0";
   ofn.lpstrFile = fileName;
   ofn.nMaxFile = MAX_PATH;
   ofn.lpstrInitialDir = initialDir.empty() ? NULL : initialDir.c_str();

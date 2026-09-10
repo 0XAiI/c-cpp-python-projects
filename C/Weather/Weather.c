@@ -1,8 +1,8 @@
+#include <cjson/cJSON.h>
 #include <cs50.h>
 #include <curl/curl.h>
 #include <curl/easy.h>
-#include <cjson/cJSON.h>
-#include <string.h>
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -59,7 +59,7 @@ bool init_response_buffer(ResponseBuffer *s) {
   }
 
   s->len = 0;
-  s->buffer = malloc(1);
+  s->buffer = (char *)malloc(1);
 
   if (s->buffer == NULL) {
     fprintf(stderr, "Memory allocation failed\n");
@@ -74,7 +74,7 @@ size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp) {
   size_t new_len = ((ResponseBuffer *)userp)->len + size * nmemb;
   ResponseBuffer *s = (ResponseBuffer *)userp;
 
-  char *tmp = realloc(s->buffer, new_len + 1);
+  char *tmp = (char *)realloc(s->buffer, new_len + 1);
   if (tmp == NULL) {
     fprintf(stderr, "Memory reallocation failed\n");
     return 0;
@@ -112,12 +112,12 @@ void parse_weather_data(const char *json) {
   char description[MAX_BUFFER_LEN] = {0};
   char city[MAX_BUFFER_LEN] = {0};
 
-  char *temp_ptr = strstr(json, "\"temp\":");
+  char *temp_ptr = (char *)strstr(json, "\"temp\":");
   if (temp_ptr != NULL) {
     sscanf(temp_ptr, "\"temp\":%f", &temperature);
   }
 
-  char *coord_ptr = strstr(json, "\"coord\"");
+  char *coord_ptr = (char *)strstr(json, "\"coord\"");
   if (coord_ptr != NULL) {
     char *lon_ptr = strstr(coord_ptr, "\"lon\":");
     char *lat_ptr = strstr(coord_ptr, "\"lat\":");
@@ -130,32 +130,32 @@ void parse_weather_data(const char *json) {
     }
   }
 
-  char *hum_ptr = strstr(json, "\"humidity\":");
+  char *hum_ptr = (char *)strstr(json, "\"humidity\":");
   if (hum_ptr != NULL) {
     sscanf(hum_ptr, "\"humidity\":%f", &humidity);
   }
 
-  char *pres_ptr = strstr(json, "\"pressure\":");
+  char *pres_ptr = (char *)strstr(json, "\"pressure\":");
   if (pres_ptr != NULL) {
     sscanf(pres_ptr, "\"pressure\":%f", &pressure);
   }
 
-  char *wind_ptr = strstr(json, "\"speed\":");
+  char *wind_ptr = (char *)strstr(json, "\"speed\":");
   if (wind_ptr != NULL) {
     sscanf(wind_ptr, "\"speed\":%f", &wind_speed);
   }
 
-  char *desc_ptr = strstr(json, "\"description\":\"");
+  char *desc_ptr = (char *)strstr(json, "\"description\":\"");
   if (desc_ptr != NULL) {
     sscanf(desc_ptr, "\"description\":\"%255[^\"]\"", description);
   }
 
-  char *cloud_ptr = strstr(json, "\"all\":");
+  char *cloud_ptr = (char *)strstr(json, "\"all\":");
   if (cloud_ptr != NULL) {
     sscanf(cloud_ptr, "\"all\":%f", &cloudiness);
   }
 
-  char *city_ptr = strstr(json, "\"name\":\"");
+  char *city_ptr = (char *)strstr(json, "\"name\":\"");
   if (city_ptr != NULL) {
     sscanf(city_ptr, "\"name\":\"%255[^\"]\"", city);
   }

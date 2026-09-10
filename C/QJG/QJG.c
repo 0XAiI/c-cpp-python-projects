@@ -23,7 +23,7 @@ static size_t write_callback(void *contents, size_t size, size_t nmemb,
   size_t total_size = size * nmemb;
   MemoryChunk *mem = (MemoryChunk *)userp;
 
-  char *ptr = realloc(mem->memory, total_size + mem->size + 1);
+  char *ptr = (char *)realloc(mem->memory, total_size + mem->size + 1);
   if (ptr == NULL) {
     fprintf(stderr, "Memory allocation failed\n");
     return 0;
@@ -42,7 +42,7 @@ bool init_memory_chunk(MemoryChunk *chunk) {
     return false;
   }
 
-  chunk->memory = malloc(1);
+  chunk->memory = (char *)malloc(1);
   if (chunk->memory == NULL) {
     fprintf(stderr, "Memory allocation failed\n");
     return false;

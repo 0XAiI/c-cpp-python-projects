@@ -65,7 +65,7 @@ void Init_Window() {
 }
 
 void Init_Box() {
-  Box = (Rectangle){0, 0, GetScreenWidth(), GetScreenHeight()};
+  Box = (Rectangle){0, 0, (float)GetScreenWidth(), (float)GetScreenHeight()};
   Box_Color = Init_Color(200, 200, 200, 255);
 }
 

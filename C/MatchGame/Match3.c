@@ -74,7 +74,7 @@ void cleanup_resources(Music *music, Texture2D *background, int *score) {
 }
 
 void create_window(int board[GRID_SIZE][GRID_SIZE]) {
-  int *score = malloc(sizeof(int));
+  int *score = (int *)malloc(sizeof(int));
   if (score == NULL) {
     fprintf(stderr, "Failed to allocate memory for score\n");
     return;
@@ -154,7 +154,7 @@ void handle_input(int board[GRID_SIZE][GRID_SIZE], GameState *state,
     int y = (state->mouse_position.y - grid_origin.y) / TILE_SIZE;
 
     if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
-      state->selected_tile = (Vector2){x, y};
+      state->selected_tile = (Vector2){(float)x, (float)y};
     }
   }
 

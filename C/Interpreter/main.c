@@ -41,7 +41,7 @@ int output_result(const char *text) {
   }
 
   while (i < len && text[i] != '\0') {
-    char operator = text[i];
+    char operation = text[i];
     int number = 0;
     i++;
 
@@ -55,7 +55,7 @@ int output_result(const char *text) {
       i++;
     }
 
-    switch (operator) {
+    switch (operation) {
     case '+':
       result += number;
       break;
@@ -73,7 +73,7 @@ int output_result(const char *text) {
       result /= number;
       break;
     default:
-      fprintf(stderr, "Error: Invalid operator '%c'\n", operator);
+      fprintf(stderr, "Error: Invalid operator '%c'\n", operation);
       return -1;
     }
   }
@@ -93,7 +93,7 @@ char *user_input_string(const char *text) {
     return NULL;
   }
 
-  char *result = malloc(size + 1);
+  char *result = (char *)malloc(size + 1);
   if (result == NULL) {
     fprintf(stderr, "Error: Memory allocation failed\n");
     return NULL;

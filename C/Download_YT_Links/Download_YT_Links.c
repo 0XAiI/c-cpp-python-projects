@@ -205,8 +205,6 @@ void menu(void) {
       break;
     case '4':
       printf("Goodbye!\n");
-      free(choice);
-      return;
     default:
       printf("Invalid choice. Try again.\n");
     }

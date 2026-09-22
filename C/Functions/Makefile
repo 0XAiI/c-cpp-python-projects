@@ -1,6 +1,6 @@
 CC = clang
 CFLAGS = -Wall -Wextra
-LDFLAGS = -lcs50 -lraylib
+LDFLAGS = -lcs50 -lraylib -lm
 
 SRC = Functions.c
 EXEC = Functions

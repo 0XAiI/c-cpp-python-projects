@@ -162,10 +162,18 @@ bool translate_text(const char *text, const char *source, const char *output) {
   }
 
   char url[MAX_URL_LEN];
-  snprintf(url, sizeof(url),
-           "https://translate.googleapis.com/translate_a/"
-           "single?client=gtx&sl=%s&tl=%s&dt=t&q=%s",
-           source, output, encoded_text);
+  int url_len =
+      snprintf(url, sizeof(url),
+               "https://translate.googleapis.com/translate_a/"
+               "single?client=gtx&sl=%s&tl=%s&dt=t&q=%s",
+               source, output, encoded_text);
+  if (url_len < 0 || (size_t)url_len >= sizeof(url)) {
+    fprintf(stderr, "Input text too long to build a valid request URL\n");
+    free(chunk.memory);
+    curl_free(encoded_text);
+    curl_easy_cleanup(curl);
+    return false;
+  }
 
   curl_easy_setopt(curl, CURLOPT_URL, url);
   curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memory_callback);
@@ -209,33 +217,37 @@ int main(void) {
   }
 
   char *source_input = get_string("Enter source language: ");
+  if (source_input == NULL) {
+    fprintf(stderr, "Failed to get source language\n");
+    curl_global_cleanup();
+    return EXIT_FAILURE;
+  }
+
   const char *source = get_language_code(source_input);
   if (source == NULL) {
     fprintf(stderr, "Unsupported source language: %s\n", source_input);
     print_supported_languages();
-    free(input_text);
-    free(source_input);
     curl_global_cleanup();
     return EXIT_FAILURE;
   }
 
   char *output_input = get_string("Enter output language: ");
+  if (output_input == NULL) {
+    fprintf(stderr, "Failed to get output language\n");
+    curl_global_cleanup();
+    return EXIT_FAILURE;
+  }
+
   const char *output = get_language_code(output_input);
   if (output == NULL) {
     fprintf(stderr, "Unsupported output language: %s\n", output_input);
     print_supported_languages();
-    free(input_text);
-    free(source_input);
-    free(output_input);
     curl_global_cleanup();
     return EXIT_FAILURE;
   }
 
   bool success = translate_text(input_text, source, output);
 
-  free(input_text);
-  free(source_input);
-  free(output_input);
   curl_global_cleanup();
 
   return success ? EXIT_SUCCESS : EXIT_FAILURE;

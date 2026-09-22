@@ -71,6 +71,7 @@ while os.path.isfile(f"digits/{image_number_jpg}.jpg"):
     try:
         img = cv2.imread(f"digits/{image_number_jpg}.jpg", cv2.IMREAD_GRAYSCALE)
         img = cv2.bitwise_not(img)
+        img = cv2.resize(img, (28, 28), interpolation=cv2.INTER_AREA)
         img = img.astype('float32') / 255.0
         img = img.reshape(1, 28, 28, 1)
         prediction = model.predict(img, verbose=0)

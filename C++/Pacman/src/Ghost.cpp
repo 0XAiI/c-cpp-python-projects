@@ -334,4 +334,4 @@ float Ghost::distanceSquared(const sf::Vector2i &a,
   return dx * dx + dy * dy;
 }
 
-} // namespace pacman
+}

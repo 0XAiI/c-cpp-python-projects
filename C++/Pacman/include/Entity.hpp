@@ -68,6 +68,6 @@ private:
   const std::string fontPath = "assets/fonts/Joystix.TTF";
 };
 
-} // namespace pacman
+}
 
-#endif // ENTITY_HPP
+#endif

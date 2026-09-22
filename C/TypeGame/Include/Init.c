@@ -11,13 +11,9 @@ unsigned int SCREEN_HEIGHT = 900;
 char input[MAX_INPUT_CHARS + 1] = {0};
 char Text[MAX_INPUT_CHARS + 1] = {0};
 bool Finished = false;
-bool Same = true;
-bool Is_Wrong = false;
-char Diff_Text_Input = '\0';
 int Wrong_Words = 0;
 float seconds = 0;
 int LetterCounter = 0;
-int Diff_Index = 0;
 Vector2 TextPosition = (Vector2){20, 100};
 Vector2 InputPosition = (Vector2){20, 100};
 Rectangle Box;
@@ -42,7 +38,6 @@ void Init_Window() {
     BeginDrawing();
     ClearBackground(BackgroundColor);
     Finished = Is_Text_Finished(Text, input);
-    Same = Is_Text_Input_Same(Text, input);
 
     if (Exit_Window(Text, input)) {
       Finished = true;
@@ -51,7 +46,7 @@ void Init_Window() {
     Draw_Correct_Text();
 
     Draw_Box(Box, Box_Color);
-    Draw_Cursor(); // need to update the cursor function
+    Draw_Cursor();
     Draw_Text();
 
     EndDrawing();
@@ -140,23 +135,6 @@ bool Is_Text_Finished(const char *Text, char *input) {
   return strcmp(Text, input) == 0;
 }
 
-bool Is_Text_Input_Same(const char *Text, char *input) {
-  if (Text == NULL || input == NULL)
-    return false;
-
-  for (int i = 0; i < LetterCounter && Text[i] != '\0' && input[i] != '\0';
-       i++) {
-    if (Text[i] != input[i]) {
-      Diff_Text_Input = input[i];
-      Diff_Index = i;
-      return false;
-    }
-  }
-
-  Diff_Index = -1;
-  return true;
-}
-
 bool Exit_Window(const char *Text, char *input) {
   if (Text == NULL || input == NULL)
     return false;
@@ -197,7 +175,7 @@ void Draw_Cursor() {
   for (int i = 0; i < LetterCounter; i++) {
     char c;
 
-    if (i < strlen(Text)) {
+    if ((size_t)i < strlen(Text)) {
       c = Text[i];
     } else {
       c = (LetterCounter > 0 && strlen(Text) > 0) ? Text[strlen(Text) - 1]
@@ -246,7 +224,7 @@ void Init_Level() {
   char line[64];
 
   do {
-    printf("1-EASY\n2-MEDIUM\n3-HARD\n4-Quit");
+    printf("1-EASY\n2-MEDIUM\n3-HARD\n4-Quit\n");
     printf("Choose your level: ");
 
     if (fgets(line, sizeof(line), stdin) == NULL) {
@@ -283,8 +261,8 @@ void Init_Level() {
       stop = true;
       break;
     case 4:
-      stop = true;
-      break;
+      printf("Goodbye!\n");
+      exit(EXIT_SUCCESS);
     default:
       printf("Invalid Choice\n");
       break;

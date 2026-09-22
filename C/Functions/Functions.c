@@ -1,6 +1,7 @@
 #include <cs50.h>
 #include <raylib.h>
 
+#include <limits.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -72,6 +73,9 @@ FunctionType get_function_choice(void) {
   int choice;
   do {
     choice = get_int("Enter your choice (1-8): ");
+    if (choice == INT_MAX) {
+      exit(EXIT_SUCCESS);
+    }
     if (choice < 1 || choice > 8) {
       printf("Invalid choice. Please enter a number between 1 and 8.\n");
     }

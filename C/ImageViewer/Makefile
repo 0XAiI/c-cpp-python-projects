@@ -1,6 +1,6 @@
 CC = clang
 CFLAGS = -Wall -Wextra
-LDFLAGS = -lSDL2 -lSDL2_image
+LDFLAGS = -lSDL2 -lSDL2_image -lm
 
 SRC = main.c
 EXEC = main
@@ -8,6 +8,7 @@ EXEC = main
 ifeq ($(OS),Windows_NT)
 	EXEC := $(EXEC).exe
 	RM = del /f /q
+	LDFLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lm
 else
 	RM = rm -f
 endif

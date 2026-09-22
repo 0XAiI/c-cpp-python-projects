@@ -9,7 +9,6 @@
 #include "Quiz.hpp"
 
 Quiz quiz;
-bool Player::Answered = false;
 
 void Player::Init(void) {
   Pos = Vector2{355, 690};

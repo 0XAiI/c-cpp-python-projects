@@ -17,7 +17,7 @@ namespace {
 constexpr int NUM_COLORS = 9;
 constexpr int FPS_DELAY = 16;
 constexpr uint32_t BG_COLOR = 0x000000FF;
-} // namespace
+}
 
 const std::string UI::Icon_Path = "../Icon/icon.png";
 
@@ -149,6 +149,7 @@ bool UI::Init_Window() {
   if (!renderer) {
     std::cerr << "Renderer Init Error: " << SDL_GetError() << std::endl;
     SDL_DestroyWindow(window);
+    window = nullptr;
     return false;
   }
 
@@ -158,7 +159,9 @@ bool UI::Init_Window() {
   if (!texture) {
     std::cerr << "Texture Init Error: " << SDL_GetError() << std::endl;
     SDL_DestroyRenderer(renderer);
+    renderer = nullptr;
     SDL_DestroyWindow(window);
+    window = nullptr;
     return false;
   }
 
@@ -249,8 +252,11 @@ void UI::Clear_Screen() {
   }
 
   uint32_t *pixelData = (uint32_t *)pixels;
-  for (int i = 0; i < WINDOW_WIDTH * WINDOW_HEIGHT; ++i) {
-    pixelData[i] = BG_COLOR;
+  const int rowPitch = pitch / 4;
+  for (int y = 0; y < WINDOW_HEIGHT; ++y) {
+    for (int x = 0; x < WINDOW_WIDTH; ++x) {
+      pixelData[y * rowPitch + x] = BG_COLOR;
+    }
   }
   SDL_UnlockTexture(texture);
 }
@@ -296,5 +302,4 @@ void UI::Run() {
     SDL_Delay(FPS_DELAY);
   }
 }
-
 

@@ -25,7 +25,7 @@ void DrawEdges() {
 }
 
 bool LoadSounds() {
-  g_laserSound = LoadSound("../Sound/laser.ogg");
+  g_laserSound = LoadSound("Sound/laser.ogg");
   if (!Valid_Sound(g_laserSound)) {
     std::cerr << "Failed to load laser.ogg sound" << std::endl;
     return false;
@@ -40,7 +40,7 @@ void Cleanup() {
   CloseAudioDevice();
   CloseWindow();
 }
-} // namespace
+}
 
 int main(void) {
   srand(time(NULL));

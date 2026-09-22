@@ -1,6 +1,5 @@
 #include "../include/Map.hpp"
 namespace pacman {
-//clang-format off
 const std::vector<std::string> Map::DEFAULT_MAP = {
     "############################", "#............##............#",
     "#.####.#####.##.#####.####.#", "#O####.#####.##.#####.####O#",
@@ -18,7 +17,6 @@ const std::vector<std::string> Map::DEFAULT_MAP = {
     "###.##.##.########.##.##.###", "#......##....##P...##......#",
     "#.########################.#", "#..........................#",
     "############################"};
-//clang-format on
 Map::Map() : map(DEFAULT_MAP) {
   pellet.setRadius(1);
   powerPellet.setRadius(5);
@@ -157,4 +155,4 @@ bool Map::isWalkableTile(const sf::Vector2i &tile) const {
   return map[tile.y][tile.x] != '#';
 }
 
-} // namespace pacman
+}

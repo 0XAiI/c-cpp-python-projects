@@ -1,9 +1,8 @@
-// Entry point: creates the Game controller and starts the main loop.
 #include <iostream>
 
 #include "../include/Game.hpp"
 
-int main() { // Game execution starts here
+int main() {
   try {
     pacman::Game game;
     game.run();

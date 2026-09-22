@@ -49,9 +49,9 @@ bool Tetromino::checkCollision(
         int br = (int)blocks.position.y + row;
         int bc = (int)blocks.position.x + col;
         if (br < 0 || br >= Constants::ROWS || bc < 0 || bc >= Constants::COLS)
-          return true; // hit wall
+          return true;
         if (board[br][bc] != 0)
-          return true; // hit locked piece
+          return true;
       }
     }
   }

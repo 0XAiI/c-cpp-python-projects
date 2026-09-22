@@ -45,12 +45,12 @@ void Game::loadGameResources() {
   try {
     pacman.loadTextures();
   } catch (const std::exception &) {
-    std::cerr << "Error loading pacman texture" << std::endl;
+    throw;
   }
   try {
     ghosts.loadTextures();
   } catch (const std::exception &) {
-    std::cerr << "Error loading ghosts texture" << std::endl;
+    throw;
   }
   try {
     entity.loadMenuMusic();
@@ -216,4 +216,4 @@ void Game::render(bool &running) {
   window.display();
 }
 
-} // namespace pacman
+}

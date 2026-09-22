@@ -8,16 +8,14 @@
 
 namespace pacman {
 
-// Game state enumeration for tracking current game phase
 enum class GameState {
-  MENU,    // Main menu state
-  PLAYING, // Game is actively running
-  VICTORY, // Player has won
-  LOSE,    // Player has lost
+  MENU,
+  PLAYING,
+  VICTORY,
+  LOSE,
   RESET
 };
 
-// Utility struct for converting GameState to string representation
 struct State {
   static constexpr const char *Menu = "MENU";
   static constexpr const char *Playing = "PLAYING";
@@ -25,7 +23,6 @@ struct State {
   static constexpr const char *Lose = "LOSE";
   static constexpr const char *Reset = "RESET";
 
-  // Converts GameState enum to human-readable string
   static const std::string getGameState(GameState gameState) {
     switch (gameState) {
     case GameState::MENU:
@@ -54,6 +51,6 @@ struct State {
   }
 };
 
-} // namespace pacman
+}
 
-#endif // GAMESTATE_HPP
+#endif

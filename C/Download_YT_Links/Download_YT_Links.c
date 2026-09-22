@@ -23,13 +23,35 @@ bool is_valid_link(const char *link) {
          (strstr(link, "youtu.be/") != NULL);
 }
 
+bool escape_shell_arg(char *dst, size_t dst_len, const char *src) {
+  if (dst == NULL || src == NULL || dst_len == 0) {
+    return false;
+  }
+
+  size_t j = 0;
+  for (size_t i = 0; src[i] != '\0'; i++) {
+    char c = src[i];
+    if (c == '"' || c == '\\' || c == '$' || c == '`') {
+      if (j + 2 >= dst_len) {
+        return false;
+      }
+      dst[j++] = '\\';
+      dst[j++] = c;
+    } else {
+      if (j + 1 >= dst_len) {
+        return false;
+      }
+      dst[j++] = c;
+    }
+  }
+
+  dst[j] = '\0';
+  return true;
+}
+
 void get_unique_output(char *buffer, const char *extension) {
   const char *dir_name = "Music";
   MKDIR(dir_name);
-
-  for (int i = 0; i < 100; i++) {
-    snprintf(buffer, MAX_PATH, "Music/video%d.%s", i, extension);
-  }
 
   snprintf(buffer, MAX_PATH, "./Music/default_output.%s", extension);
 }
@@ -58,9 +80,15 @@ bool download_media(const char *link, const char *format, const char *options) {
   char output[MAX_PATH];
   get_unique_output(output, format);
 
+  char escaped_link[MAX_PATH];
+  if (!escape_shell_arg(escaped_link, sizeof(escaped_link), link)) {
+    fprintf(stderr, "Error: link could not be processed safely\n");
+    return false;
+  }
+
   char command[MAX_COMMAND];
   snprintf(command, sizeof(command), "yt-dlp %s -o \"%s\" \"%s\"", options,
-           output, link);
+           output, escaped_link);
   printf("Downloading %s...\n", format);
   int result = system(command);
 
@@ -84,6 +112,7 @@ void download_media_menu(const char *prompt, const char *format,
                          const char *options) {
   if (!prompt)
     return;
+
   string link = get_string("%s", prompt);
 
   if (link == NULL) {
@@ -92,12 +121,10 @@ void download_media_menu(const char *prompt, const char *format,
 
   if (!is_valid_link(link)) {
     fprintf(stderr, "Invalid YouTube link.\n");
-    free(link);
     return;
   }
 
   download_media(link, format, options);
-  free(link);
 }
 
 void download_mp4(void) {
@@ -130,13 +157,10 @@ bool install_dependencies_for_linux(void) {
     if (resp[0] == 'y' || resp[0] == 'Y') {
       if (system("sudo apt install -y yt-dlp mpv") != 0) {
         fprintf(stderr, "Installation failed. Please install manually.\n");
-        free(resp);
         return false;
       }
       printf("Dependencies installed successfully.\n");
     }
-
-    free(resp);
   }
   return true;
 }
@@ -156,18 +180,14 @@ bool install_dependencies_for_windows(void) {
       if (system("winget install yt-dlp.yt-dlp > nul") != 0 ||
           system("winget install -e --id mpv.net > nul") != 0) {
         fprintf(stderr, "Installation failed. Please install manually.\n");
-        free(resp);
         return false;
       }
       printf("Dependencies installed successfully.\n");
     }
-
-    free(resp);
   }
   return true;
 }
 #endif
-
 void menu(void) {
 #ifdef __linux__
   if (!install_dependencies_for_linux()) {
@@ -189,26 +209,23 @@ void menu(void) {
     printf("4. Exit\n");
 
     string choice = get_string("Choose an option: ");
+
     if (choice == NULL) {
       continue;
     }
 
-    switch (choice[0]) {
-    case '1':
+    if (choice[0] == '1') {
       download_mp4();
-      break;
-    case '2':
+    } else if (choice[0] == '2') {
       download_mp3();
-      break;
-    case '3':
+    } else if (choice[0] == '3') {
       download_wav();
-      break;
-    case '4':
+    } else if (choice[0] == '4') {
       printf("Goodbye!\n");
-    default:
+      return;
+    } else {
       printf("Invalid choice. Try again.\n");
     }
-    free(choice);
   }
 }
 

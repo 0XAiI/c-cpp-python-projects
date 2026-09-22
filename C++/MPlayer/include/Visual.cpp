@@ -17,7 +17,7 @@ constexpr float MIN_HEIGHT = 100.0f;
 constexpr float HEIGHT_MULTIPLIER = 300.0f;
 constexpr float SMOOTHING_FACTOR = 0.9f;
 constexpr float AMPLITUDE_FACTOR = 0.1f;
-} // namespace
+}
 
 void Visual::Set_Visual() {
   for (int i = 0; i < BAR_COUNT; i++) {

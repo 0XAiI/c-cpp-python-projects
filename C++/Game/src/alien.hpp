@@ -46,14 +46,6 @@ public:
   float Alien2_Delay = ALIEN2_DELAY;
   bool Alien2_Move = false;
   bool Alien3_Move = false;
-
-private:
-  void initAlienRow(int startX, int spacing, int rowY, int textureIndex,
-                    bool *active, Vector2 *positions);
-  Vector2 calculateLaserPosition(int index, int textureIndex,
-                                 const Vector2 *positions);
-  bool checkCollisionWithLaser(Rectangle laserRect, int index, bool *active,
-                               Vector2 *positions, int textureIndex);
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include <cs50.h>
 
+#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -186,6 +187,11 @@ void display_menu(void) {
 }
 
 void handle_menu_choice(char choice) {
+  if (choice == CHAR_MAX) {
+    printf("Exiting...\n");
+    exit(EXIT_SUCCESS);
+  }
+
   switch (choice) {
   case '1':
     set_board(board);
@@ -235,13 +241,7 @@ void menu(void) {
 int main(void) {
   srand(time(NULL));
 
-  clock_t start = clock();
   menu();
-  clock_t end = clock();
-
-  double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
-  printf("Time taken: %.2f seconds\n", time_spent);
-  printf("Attempts: %d\n", attempts);
 
   return EXIT_SUCCESS;
 }

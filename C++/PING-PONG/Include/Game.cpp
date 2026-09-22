@@ -145,18 +145,16 @@ void Game::Show_Scores(unsigned int *score1, unsigned int *score2) {
 
   SDL_Color white = {255, 255, 255, 255};
 
-  // Create score texts
   const std::string scoreText1 = "P1: " + std::to_string(*score1);
   const std::string scoreText2 = "P2: " + std::to_string(*score2);
 
-  // Render Player 1 score (right side)
   SDL_Surface *surface1 =
       TTF_RenderText_Blended(gameFont, scoreText1.c_str(), white);
   if (surface1) {
     SDL_Texture *texture1 =
         SDL_CreateTextureFromSurface(ui->renderer, surface1);
     if (texture1) {
-      // Position Player 1 score on the right side
+
       SDL_FRect dstRect1 = {static_cast<float>(SCREEN_WIDTH - surface1->w - 50),
                             20.0f, static_cast<float>(surface1->w),
                             static_cast<float>(surface1->h)};
@@ -166,14 +164,13 @@ void Game::Show_Scores(unsigned int *score1, unsigned int *score2) {
     SDL_FreeSurface(surface1);
   }
 
-  // Render Player 2 score (left side)
   SDL_Surface *surface2 =
       TTF_RenderText_Blended(gameFont, scoreText2.c_str(), white);
   if (surface2) {
     SDL_Texture *texture2 =
         SDL_CreateTextureFromSurface(ui->renderer, surface2);
     if (texture2) {
-      // Position Player 2 score on the left side
+
       SDL_FRect dstRect2 = {50.0f, 20.0f, static_cast<float>(surface2->w),
                             static_cast<float>(surface2->h)};
       SDL_RenderCopyF(ui->renderer, texture2, NULL, &dstRect2);
@@ -207,12 +204,12 @@ void Game::Game_Update(SDL_FRect Current_Pos[2]) {
 
   if (Rect_Collision_Ball(&ui->Rect1, &ui->ball)) {
     ui->ball.velX =
-        -std::abs(ui->ball.velX); // Move left after hitting right paddle
+        -std::abs(ui->ball.velX);
     Play_Sound();
   }
   if (Rect_Collision_Ball(&ui->Rect2, &ui->ball)) {
     ui->ball.velX =
-        std::abs(ui->ball.velX); // Move right after hitting left paddle
+        std::abs(ui->ball.velX);
     Play_Sound();
   }
   if (ui->winner.player1 || ui->winner.player2) {
@@ -228,10 +225,8 @@ void Game::Game_Update(SDL_FRect Current_Pos[2]) {
 
 void Game::Main_Loop() {
 
-  // Set Window Icon
   ui->Set_Window();
 
-  // Initialize sound engine
   if (!Init_Sound()) {
     std::cerr << "Failed to initialize sound engine." << std::endl;
     return;

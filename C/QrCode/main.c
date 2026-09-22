@@ -1,5 +1,6 @@
 #include <cs50.h>
 
+#include <limits.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -28,6 +29,10 @@ int get_mask_number(void) {
   int mask_number;
   do {
     mask_number = get_int("Enter your MaskNumber (0-7): ");
+    if (mask_number == INT_MAX) {
+      fprintf(stderr, "No input provided.\n");
+      exit(EXIT_FAILURE);
+    }
     if (mask_number < MIN_MASK_NUMBER || mask_number > MAX_MASK_NUMBER) {
       printf("Invalid mask number. Please enter a number between 0 and 7.\n");
     }

@@ -9,7 +9,7 @@ constexpr int NUM_QUESTIONS = 10;
 constexpr int NUM_CHOICES = 4;
 constexpr int FRAME_INCREMENT = 3;
 constexpr float TEXT_SPEED = 35.0f;
-} // namespace
+}
 
 bool Quiz::Time_Finished = false;
 bool Quiz::QuizAnswered = false;

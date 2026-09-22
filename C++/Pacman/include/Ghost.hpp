@@ -84,6 +84,6 @@ private:
   static constexpr float ANIMATION_SPEED = 8.f;
 };
 
-} // namespace pacman
+}
 
-#endif // GHOST_HPP
+#endif

@@ -251,12 +251,10 @@ int main(void) {
     send_weather_request(city_name);
   } else {
     printf("Invalid city name. Please enter a valid Algerian city.\n");
-    free(city_name);
     curl_global_cleanup();
     return EXIT_FAILURE;
   }
 
-  free(city_name);
   curl_global_cleanup();
 
   return EXIT_SUCCESS;

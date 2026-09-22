@@ -51,7 +51,6 @@ void Game::run() {
 
   bool running = true;
   float stop_timer = 0.0f;
-  data.saveHighscore(getScore());
   while (!WindowShouldClose() && running) {
     float dt = GetFrameTime();
 

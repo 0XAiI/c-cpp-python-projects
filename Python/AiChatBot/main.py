@@ -35,12 +35,22 @@ def main()->None:
         if user_input.lower() == "exit" or user_input.lower() == "quit":
             break
 
-        response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=messages,
-            temperature=0.7,
-            max_tokens=512
-        )
+        if not user_input.strip():
+            continue
+
+        messages.append({"role": "user", "content": user_input})
+
+        try:
+            response = client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=messages,
+                temperature=0.7,
+                max_tokens=512
+            )
+        except Exception as e:
+            print(f"Error: {e}")
+            messages.pop()
+            continue
 
         bot_reply = response.choices[0].message.content
 

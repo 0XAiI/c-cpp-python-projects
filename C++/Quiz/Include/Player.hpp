@@ -17,9 +17,6 @@ public:
   void Movement();
   void ResetPos(Vector2 *Reset_Position);
   ~Player() {}
-
-private:
-  static bool Answered;
 };
 
 void Ranking(size_t Score);

@@ -48,6 +48,6 @@ private:
   float animTimer = 0.f;
 };
 
-} // namespace pacman
+}
 
-#endif // PACMAN_HPP
+#endif

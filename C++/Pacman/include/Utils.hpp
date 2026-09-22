@@ -31,6 +31,6 @@ private:
   std::string scoreFilePath = "assets/data/data.txt";
 };
 
-} // namespace pacman
+}
 
-#endif // UTILS_HPP
+#endif

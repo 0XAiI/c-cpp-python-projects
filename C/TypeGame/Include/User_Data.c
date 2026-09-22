@@ -10,7 +10,7 @@ void Init_File(FILE **filepointer) {
     return;
   }
 
-  *filepointer = fopen(filepath, "w+");
+  *filepointer = fopen(filepath, "a+");
   if (*filepointer == NULL) {
     perror("Error creating file");
     file_exist = false;

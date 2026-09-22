@@ -48,6 +48,6 @@ private:
   std::vector<std::string> map;
 };
 
-} // namespace pacman
+}
 
-#endif // MAP_HPP
+#endif

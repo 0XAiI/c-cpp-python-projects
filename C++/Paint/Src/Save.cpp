@@ -1,3 +1,4 @@
+#include <SDL2/SDL_image.h>
 #include <SDL2/SDL_surface.h>
 
 #include <iostream>
@@ -67,8 +68,8 @@ void Save::Save_To_Png(SDL_Renderer *renderer, SDL_Texture *tex) {
     return;
   }
 
-  if (SDL_SaveBMP(surface, Save_Path.c_str()) != 0) {
-    std::cerr << "Save BMP failed: " << SDL_GetError() << std::endl;
+  if (IMG_SavePNG(surface, Save_Path.c_str()) != 0) {
+    std::cerr << "Save PNG failed: " << SDL_GetError() << std::endl;
   } else {
     std::cout << "Saved to " << Save_Path << std::endl;
   }

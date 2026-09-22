@@ -29,10 +29,9 @@ public:
 
 private:
   void drawText(sf::RenderWindow &window);
-  void setupTextStyle(sf::Text &txt, const std::string &str, sf::Color color,
-                      float x, float y);
 
   sf::Font font;
+  bool fontLoaded = false;
   std::unique_ptr<sf::Text> text;
   std::unique_ptr<sf::Text> muteText;
   std::unique_ptr<sf::Text> playText;
@@ -45,7 +44,6 @@ private:
   bool isRunning = false;
   bool muteMusic = false;
   float currentSpeed = 1.0f;
-  std::string mp4File;
   std::string wavFile;
   bool isTempFile = false;
 };

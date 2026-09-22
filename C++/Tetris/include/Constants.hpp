@@ -29,13 +29,11 @@ const float TETRIS_FONT_SPACING = 5.0f;
 
 const std::string TETRIS_HIGHSCORE_PATH = "data/highscores.txt";
 
-} // namespace Constants
+}
 
 enum class TetrominoType { I = 0, O, T, S, Z, J, L };
 
 namespace TetrisShapes {
-
-// clang-format off
 
 using Shape = std::array<
     std::array<int, Constants::SHAPE_SIZE>,
@@ -91,8 +89,6 @@ constexpr Shape L = {{
     {{0, 0, 0, 0}}
 }};
 
-// clang-format on
+}
 
-} // namespace TetrisShapes
-
-#endif // CONSTANTS_HPP
+#endif

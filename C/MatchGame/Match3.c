@@ -31,12 +31,11 @@ bool is_board_empty(int board[GRID_SIZE][GRID_SIZE]);
 int get_random_letter(void);
 void create_window(int board[GRID_SIZE][GRID_SIZE]);
 void initialize_board(int board[GRID_SIZE][GRID_SIZE]);
-void handle_input(int board[GRID_SIZE][GRID_SIZE], GameState *state,
-                  Music *music);
+void handle_input(int board[GRID_SIZE][GRID_SIZE], GameState *state);
 void check_matches(int board[GRID_SIZE][GRID_SIZE], GameState *state,
                    Music *music);
 void draw_board(int board[GRID_SIZE][GRID_SIZE], GameState *state);
-void cleanup_resources(Music *music, Texture2D *background, int *score);
+void cleanup_resources(Music *music, Texture2D *background);
 
 int main(void) {
   srand(time(NULL));
@@ -61,45 +60,38 @@ void initialize_board(int board[GRID_SIZE][GRID_SIZE]) {
   }
 }
 
-void cleanup_resources(Music *music, Texture2D *background, int *score) {
+void cleanup_resources(Music *music, Texture2D *background) {
   if (music != NULL) {
     UnloadMusicStream(*music);
   }
   if (background != NULL) {
     UnloadTexture(*background);
   }
-  if (score != NULL) {
-    free(score);
-  }
 }
 
 void create_window(int board[GRID_SIZE][GRID_SIZE]) {
-  int *score = (int *)malloc(sizeof(int));
-  if (score == NULL) {
-    fprintf(stderr, "Failed to allocate memory for score\n");
-    return;
-  }
+  int score = 0;
 
   InitAudioDevice();
+  InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Match Game");
+  SetTargetFPS(60);
 
-  Music music = LoadMusicStream("../Library/Music/assets_match.mp3");
-  Texture2D background = LoadTexture("../Library/Background/background.jpg");
+  Texture2D background = LoadTexture("./resources/background.png");
+  Music music = LoadMusicStream("./resources/match_old.mp3");
 
   if (background.id == 0) {
     fprintf(stderr, "Failed to load background texture\n");
-    cleanup_resources(&music, NULL, score);
+    cleanup_resources(&music, NULL);
+    CloseWindow();
+    CloseAudioDevice();
     return;
   }
 
-  *score = 0;
-  GameState state = {.score = *score,
+  GameState state = {.score = score,
                      .select_block = false,
                      .winner = false,
                      .mouse_position = {0},
                      .selected_tile = {-1, -1}};
-
-  InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Match Game");
-  SetTargetFPS(60);
 
   while (!WindowShouldClose() && !state.winner) {
     BeginDrawing();
@@ -108,7 +100,7 @@ void create_window(int board[GRID_SIZE][GRID_SIZE]) {
 
     state.mouse_position = GetMousePosition();
 
-    handle_input(board, &state, &music);
+    handle_input(board, &state);
     check_matches(board, &state, &music);
     draw_board(board, &state);
 
@@ -123,9 +115,12 @@ void create_window(int board[GRID_SIZE][GRID_SIZE]) {
     EndDrawing();
   }
 
-  WaitTime(2);
-  cleanup_resources(&music, &background, score);
+  if (state.winner) {
+    WaitTime(2);
+  }
+  cleanup_resources(&music, &background);
   CloseWindow();
+  CloseAudioDevice();
 
 #ifdef _WIN32
   system("cls");
@@ -141,14 +136,10 @@ void create_window(int board[GRID_SIZE][GRID_SIZE]) {
   }
 }
 
-void handle_input(int board[GRID_SIZE][GRID_SIZE], GameState *state,
-                  Music *music) {
+void handle_input(int board[GRID_SIZE][GRID_SIZE], GameState *state) {
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
     state->select_block = true;
-    int grid_width = GRID_SIZE * TILE_SIZE;
-    int grid_height = GRID_SIZE * TILE_SIZE;
-    Vector2 grid_origin = {((float)GetScreenWidth() - grid_width) / 2,
-                           ((float)GetScreenHeight() - grid_height) / 2};
+    Vector2 grid_origin = GRID_OFFSET;
 
     int x = (state->mouse_position.x - grid_origin.x) / TILE_SIZE;
     int y = (state->mouse_position.y - grid_origin.y) / TILE_SIZE;
@@ -211,7 +202,6 @@ void check_matches(int board[GRID_SIZE][GRID_SIZE], GameState *state,
   if (i < 0 || j < 0)
     return;
 
-  // Check 2x2 match
   if (i < GRID_SIZE - 1 && j < GRID_SIZE - 1 && board[i][j] != ' ' &&
       board[i][j] == board[i + 1][j] && board[i][j] == board[i][j + 1] &&
       board[i][j] == board[i + 1][j + 1]) {
@@ -227,7 +217,6 @@ void check_matches(int board[GRID_SIZE][GRID_SIZE], GameState *state,
     board[i][j + 1] = ' ';
     board[i + 1][j + 1] = ' ';
   }
-  // Check horizontal 3-match
   else if (i < GRID_SIZE - 2 && board[i][j] != ' ' &&
            board[i][j] == board[i + 1][j] && board[i][j] == board[i + 2][j]) {
 
@@ -238,7 +227,6 @@ void check_matches(int board[GRID_SIZE][GRID_SIZE], GameState *state,
     state->score += MATCH_3_SCORE;
     board[i][j] = board[i + 1][j] = board[i + 2][j] = ' ';
   }
-  // Check vertical 3-match
   else if (j < GRID_SIZE - 2 && board[i][j] != ' ' &&
            board[i][j] == board[i][j + 1] && board[i][j] == board[i][j + 2]) {
 
@@ -261,11 +249,6 @@ void draw_board(int board[GRID_SIZE][GRID_SIZE], GameState *state) {
 
       Vector2 text_pos = {i * TILE_SIZE + GRID_OFFSET.x + 15,
                           j * TILE_SIZE + GRID_OFFSET.y + 10};
-
-      if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && !state->select_block) {
-        board[i][j] = RANDOM_LETTERS[get_random_letter()];
-        state->score = 0;
-      }
 
       if (i == state->selected_tile.x && j == state->selected_tile.y) {
         DrawRectangleLinesEx(

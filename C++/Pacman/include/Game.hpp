@@ -52,6 +52,6 @@ private:
   void loadGameResources();
 };
 
-} // namespace pacman
+}
 
-#endif // GAME_HPP
+#endif

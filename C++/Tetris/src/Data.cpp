@@ -1,5 +1,7 @@
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
+#include <string>
 
 #include "../include/Data.hpp"
 
@@ -8,8 +10,14 @@
 int Data::loadHighscore() {
   std::ifstream infile(Constants::TETRIS_HIGHSCORE_PATH);
   int highscore = 0;
+  std::string token;
   if (infile.is_open()) {
-    infile >> highscore;
+    while (infile >> token) {
+      try {
+        highscore = std::stoi(token);
+      } catch (const std::exception &) {
+      }
+    }
   }
   return highscore;
 }

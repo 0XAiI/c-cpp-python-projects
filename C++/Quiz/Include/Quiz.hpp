@@ -19,7 +19,6 @@ public:
   static void UnloadGameFont();
 
   void SetQuestion();
-  void SetAnswered();
   void SetChoices();
   void Draw_Choices();
   void Update_Choices();

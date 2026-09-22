@@ -12,14 +12,14 @@ namespace {
 Sound g_explosionSound;
 
 bool isSoundValid(Sound sound) { return sound.frameCount > 0; }
-} // namespace
+}
 
 Game::Game() {
   loadFont();
   alien.Init_Alien();
   alien.Init_Alien_Laser();
 
-  g_explosionSound = LoadSound("../Sound/explosion.ogg");
+  g_explosionSound = LoadSound("Sound/explosion.ogg");
   if (!isSoundValid(g_explosionSound)) {
     std::cerr << "Warning: Failed to load explosion.ogg" << std::endl;
   }
@@ -33,7 +33,7 @@ Game::~Game() {
 }
 
 void Game::loadFont() {
-  font = LoadFont("../Font/Score_Font.ttf");
+  font = LoadFont("Font/Score_Font.ttf");
   if (!ValidFont(font)) {
     std::cerr << "Warning: Failed to load font, using default" << std::endl;
   }
@@ -94,23 +94,13 @@ void Game::Draw() {
   spaceShip.Draw();
   alien.Draw_Alien_Laser();
 
-  if (!alienHit1) {
-    alien.Draw_Alien1();
-  }
-  if (!alienHit2) {
-    alien.Draw_Alien2();
-  }
-  if (!alienHit3) {
-    alien.Draw_Alien3();
-  }
+  alien.Draw_Alien1();
+  alien.Draw_Alien2();
+  alien.Draw_Alien3();
 
   if (GameOver()) {
     DrawText("GAME OVER", 200, 200, 40, RED);
     DrawText(TextFormat("Score : %i", Best_Score()), 200, 250, 40, RED);
-    if (!gameOverTriggered) {
-      gameOverTimer = 2.0f;
-      gameOverTriggered = true;
-    }
   } else {
     const Vector2 livesPos = {static_cast<float>(GetScreenWidth()) - 150.0f,
                               15.0f};

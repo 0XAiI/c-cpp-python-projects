@@ -30,13 +30,6 @@ private:
   Alien alien;
   Font font = {0};
   int Score = 0;
-
-  bool alienHit1 = false;
-  bool alienHit2 = false;
-  bool alienHit3 = false;
-
-  float gameOverTimer = 0.0f;
-  bool gameOverTriggered = false;
 };
 
 #endif

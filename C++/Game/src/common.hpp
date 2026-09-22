@@ -1,4 +1,3 @@
-// common.hpp
 #ifndef COMMON_HPP
 #define COMMON_HPP
 #define WIDTH 700

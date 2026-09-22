@@ -14,7 +14,9 @@
 constexpr unsigned int SCREEN_WIDTH = 750;
 constexpr unsigned int SCREEN_HEIGHT = 850;
 static const char *WINDOW_TITLE = "Ping-Pong Game";
+#ifndef M_PI
 #define M_PI 3.14159265358979323846
+#endif
 
 struct Ball {
   bool IsMoving;

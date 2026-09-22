@@ -1,6 +1,7 @@
 #include <cstdlib>
 
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <string>
 
@@ -16,18 +17,13 @@ constexpr float DEFAULT_VOLUME = 20.0f;
 constexpr float SPEED_NORMAL = 1.0f;
 constexpr float SPEED_FAST = 1.5f;
 constexpr float SPEED_SLOW = 0.5f;
-} // namespace
-
-void MPlayer::setupTextStyle(sf::Text &txt, const std::string &str,
-                             sf::Color color, float x, float y) {
-  txt.setFont(font);
-  txt.setCharacterSize(30);
-  txt.setFillColor(color);
-  txt.setPosition(sf::Vector2f(x, y));
-  txt.setString(str);
 }
 
 void MPlayer::drawText(sf::RenderWindow &window) {
+  if (!fontLoaded) {
+    return;
+  }
+
   text->setFont(font);
   text->setCharacterSize(30);
   text->setFillColor(sf::Color::White);
@@ -94,11 +90,16 @@ void MPlayer::Mute_Volume() {
 std::string MPlayer::Convert_MP4_To_Wave(const std::string &filepath) {
   wavFile = "temp.wav";
   isTempFile = true;
-  const std::string command = "ffmpeg -i \"" + filepath + "\" " + wavFile;
+  const std::string command = "ffmpeg -y -i \"" + filepath + "\" " + wavFile;
   const int result = std::system(command.c_str());
   if (result != 0) {
     std::cerr << "Warning: ffmpeg conversion returned non-zero: " << result
               << std::endl;
+  }
+  std::ifstream check(wavFile);
+  if (!check.good()) {
+    std::cerr << "Error: ffmpeg produced no playable file" << std::endl;
+    return "";
   }
   return wavFile;
 }
@@ -139,8 +140,12 @@ bool MPlayer::If_File_MP4(const std::string &filepath) {
 
 bool MPlayer::Init_Music(const std::string &musicpath) {
   std::string path = musicpath;
-  if (If_File_MP4(path)) {
+
+  if (If_File_MP4(path) || !music.openFromFile(path)) {
     path = Convert_MP4_To_Wave(path);
+    if (path.empty()) {
+      return false;
+    }
   }
 
   if (!music.openFromFile(path)) {
@@ -168,23 +173,41 @@ MPlayer::~MPlayer() {
 }
 
 void MPlayer::LoadAndPlay(const std::string &filepath) {
-  std::string path = filepath;
-  if (If_File_MP4(path)) {
-    path = Convert_MP4_To_Wave(path);
-  }
-
-  if (!Init_Music(path)) {
+  if (!Init_Music(filepath)) {
     std::cerr << "Error initializing music" << std::endl;
     return;
   }
 
-  currentTrack = path;
+  currentTrack = filepath;
   music.play();
   isRunning = true;
 }
 
 void MPlayer::Run() {
+#ifdef _WIN32
   std::system("cls");
+#else
+  std::system("clear");
+#endif
+
+  static const char *kFontCandidates[] = {
+      "/usr/share/fonts/TTF/DejaVuSans.ttf",
+      "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+      "/usr/share/fonts/dejavu/DejaVuSans.ttf",
+      "C:\\Windows\\Fonts\\arial.ttf",
+      "/System/Library/Fonts/Helvetica.ttc",
+  };
+  for (const char *path : kFontCandidates) {
+    if (font.openFromFile(path)) {
+      fontLoaded = true;
+      break;
+    }
+  }
+  if (!fontLoaded) {
+    std::cerr << "Warning: no system font found; HUD text disabled"
+              << std::endl;
+  }
+
   text = std::make_unique<sf::Text>(font);
   muteText = std::make_unique<sf::Text>(font);
   playText = std::make_unique<sf::Text>(font);

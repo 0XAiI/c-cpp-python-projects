@@ -15,7 +15,7 @@ constexpr int RECT_HEIGHT_MULT = 10;
 constexpr int BALL_RADIUS = 25;
 constexpr float BALL_VELOCITY = 2.5f;
 constexpr int AI_MOVE_SPEED = 10;
-} // namespace
+}
 
 static inline bool Load_Icon(SDL_Surface *&icon, const std::string file_path) {
   icon = IMG_Load(file_path.c_str());

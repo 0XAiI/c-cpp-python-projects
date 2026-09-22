@@ -1,4 +1,3 @@
-#include <cs50.h>
 #include <raylib.h>
 
 #include <stdbool.h>
@@ -98,7 +97,6 @@ void update_game_state(GameState *state, Snake *snake, Vector2 *food) {
     return;
   }
 
-  // Check wall collision
   if (snake->pos_x < 0 || snake->pos_y < 0 ||
       snake->pos_x > WIDTH - snake->width ||
       snake->pos_y > HEIGHT - snake->height) {
@@ -106,17 +104,14 @@ void update_game_state(GameState *state, Snake *snake, Vector2 *food) {
     return;
   }
 
-  // Update snake position
   snake->pos_x += state->direction.x * state->speed.x;
   snake->pos_y += state->direction.y * state->speed.y;
 
-  // Update body
   for (int i = state->body_length - 1; i > 0; i--) {
     state->body[i] = state->body[i - 1];
   }
   state->body[0] = (Vector2){snake->pos_x, snake->pos_y};
 
-  // Check food collision
   Rectangle snake_head = {snake->pos_x, snake->pos_y, (float)snake->width,
                           (float)snake->height};
   if (CheckCollisionCircleRec(*food, RADIUS, snake_head)) {
@@ -145,7 +140,6 @@ void handle_game_over(GameState *state, Snake *snake) {
     }
 
     if (IsKeyPressed(KEY_ESCAPE) || IsKeyPressed(KEY_Q)) {
-      // Will exit via WindowShouldClose
     }
   }
 }
@@ -157,16 +151,13 @@ void draw_game(GameState *state, Snake *snake, Vector2 *food) {
 
   DrawText(TextFormat("Score : %1.f", state->score), 0, 0, 25, WHITE);
 
-  // Draw snake body
   for (int i = 0; i < state->body_length; i++) {
     DrawRectangle(state->body[i].x, state->body[i].y, snake->width,
                   snake->height, GREEN);
   }
 
-  // Draw food
   DrawCircle(food->x, food->y, RADIUS, RED);
 
-  // Draw game over text if needed
   if (state->game_over) {
     handle_game_over(state, snake);
   }

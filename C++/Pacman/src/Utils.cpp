@@ -68,4 +68,4 @@ void Utils::handleMenuSelection(sf::RenderWindow &window, GameState &gameState,
   drawText(window, text);
 }
 
-} // namespace pacman
+}

@@ -7,7 +7,7 @@ constexpr int BOUNDARY_OFFSET = 50;
 constexpr int MOVE_SPEED = 10;
 
 bool isTextureValid(const Texture2D &texture) { return texture.id != 0; }
-}
+} // namespace
 
 SpaceShip::SpaceShip() {
   image = LoadTexture("img/spaceship.png");

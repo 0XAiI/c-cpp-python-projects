@@ -11,7 +11,7 @@ constexpr int START_X = 50;
 constexpr float ALIEN_MOVE_SPEED = 50.0f;
 
 bool isTextureValid(Texture2D texture) { return texture.id != 0; }
-}
+} // namespace
 
 void Alien::Init_Alien() {
   alien_texture[0] = LoadTexture("img/alien1.png");

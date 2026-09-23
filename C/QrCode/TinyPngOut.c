@@ -27,7 +27,6 @@
 
 static const uint16_t DEFLATE_MAX_BLOCK_SIZE = 65535;
 
-
 static bool write(TPO_DYN_ARR(struct TinyPngOut self), const uint8_t data[],
                   size_t len);
 static void crc32(TPO_DYN_ARR(struct TinyPngOut self), const uint8_t data[],

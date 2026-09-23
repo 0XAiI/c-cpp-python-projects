@@ -6,7 +6,7 @@
 #include "../Include/Data.hpp"
 #include "../Include/Game.hpp"
 
-const std::string file_path = "../Data/data.txt";
+const std::string file_path = "Data/data.txt";
 
 static inline void Print_Winner(const std::string &winner) {
   std::cout << "Winner: " << winner << std::endl;

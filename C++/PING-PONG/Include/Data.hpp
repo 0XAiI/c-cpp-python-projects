@@ -2,10 +2,10 @@
 #ifndef DATA_HPP
 #define DATA_HPP
 #include "Game.hpp"
-#include <string>
 #include <cstdio>
 #include <memory>
 #include <stdio.h>
+#include <string>
 
 #define BUFFER_SIZE 1024
 

@@ -1,3 +1,4 @@
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
@@ -15,7 +16,7 @@ constexpr int RECT_HEIGHT_MULT = 10;
 constexpr int BALL_RADIUS = 25;
 constexpr float BALL_VELOCITY = 2.5f;
 constexpr int AI_MOVE_SPEED = 10;
-}
+} // namespace
 
 static inline bool Load_Icon(SDL_Surface *&icon, const std::string file_path) {
   icon = IMG_Load(file_path.c_str());
@@ -184,7 +185,7 @@ void UI::Set_Window() {
 
   Init_Ball(&ball);
   Init_Rects(&Rect1, &Rect2);
-  const std::string file_path = "../Img/PIPO.png";
+  const std::string file_path = "Img/PIPO.png";
   if (Load_Icon(icon, file_path)) {
     SDL_SetWindowIcon(window, icon);
     SDL_FreeSurface(icon);

@@ -1,7 +1,8 @@
 #include <numeric>
+
 #define SDL_MAIN_HANDLED
-#include <iostream>
 #include "../Include/UI.hpp"
+#include <iostream>
 
 int main(int argc, char *argv[]) {
   (void)argv;

@@ -12,7 +12,7 @@ Quiz quiz;
 
 void Player::Init(void) {
   Pos = Vector2{355, 690};
-  Texture = LoadTexture("../Img/heart.png");
+  Texture = LoadTexture("Img/heart.png");
   if (Texture.id == 0) {
     std::cout << "Texture not loaded" << std::endl;
     return;
@@ -70,8 +70,8 @@ void Window(void) {
   InitAudioDevice();
   InitWindow(WIDTH, HEIGHT, TITLE);
 
-  const Music music = LoadMusicStream("../Music/music.mp3");
-  const Font font = LoadFont("../Font/Font2.ttf");
+  const Music music = LoadMusicStream("Music/music.mp3");
+  const Font font = LoadFont("Font/Font2.ttf");
   const Vector2 ScorePos = {570, 20};
   SetMusicVolume(music, 0.5f);
 

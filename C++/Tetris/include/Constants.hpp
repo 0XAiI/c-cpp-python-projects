@@ -29,66 +29,36 @@ const float TETRIS_FONT_SPACING = 5.0f;
 
 const std::string TETRIS_HIGHSCORE_PATH = "data/highscores.txt";
 
-}
+} // namespace Constants
 
 enum class TetrominoType { I = 0, O, T, S, Z, J, L };
 
 namespace TetrisShapes {
 
-using Shape = std::array<
-    std::array<int, Constants::SHAPE_SIZE>,
-    Constants::SHAPE_SIZE
->;
+using Shape =
+    std::array<std::array<int, Constants::SHAPE_SIZE>, Constants::SHAPE_SIZE>;
 
-constexpr Shape I = {{
-    {{0, 0, 0, 0}},
-    {{1, 1, 1, 1}},
-    {{0, 0, 0, 0}},
-    {{0, 0, 0, 0}}
-}};
+constexpr Shape I = {
+    {{{0, 0, 0, 0}}, {{1, 1, 1, 1}}, {{0, 0, 0, 0}}, {{0, 0, 0, 0}}}};
 
-constexpr Shape O = {{
-    {{0, 0, 0, 0}},
-    {{0, 1, 1, 0}},
-    {{0, 1, 1, 0}},
-    {{0, 0, 0, 0}}
-}};
+constexpr Shape O = {
+    {{{0, 0, 0, 0}}, {{0, 1, 1, 0}}, {{0, 1, 1, 0}}, {{0, 0, 0, 0}}}};
 
-constexpr Shape T = {{
-    {{0, 0, 0, 0}},
-    {{0, 1, 0, 0}},
-    {{1, 1, 1, 0}},
-    {{0, 0, 0, 0}}
-}};
+constexpr Shape T = {
+    {{{0, 0, 0, 0}}, {{0, 1, 0, 0}}, {{1, 1, 1, 0}}, {{0, 0, 0, 0}}}};
 
-constexpr Shape S = {{
-    {{0, 0, 0, 0}},
-    {{0, 1, 1, 0}},
-    {{1, 1, 0, 0}},
-    {{0, 0, 0, 0}}
-}};
+constexpr Shape S = {
+    {{{0, 0, 0, 0}}, {{0, 1, 1, 0}}, {{1, 1, 0, 0}}, {{0, 0, 0, 0}}}};
 
-constexpr Shape Z = {{
-    {{0, 0, 0, 0}},
-    {{1, 1, 0, 0}},
-    {{0, 1, 1, 0}},
-    {{0, 0, 0, 0}}
-}};
+constexpr Shape Z = {
+    {{{0, 0, 0, 0}}, {{1, 1, 0, 0}}, {{0, 1, 1, 0}}, {{0, 0, 0, 0}}}};
 
-constexpr Shape J = {{
-    {{0, 0, 0, 0}},
-    {{1, 0, 0, 0}},
-    {{1, 1, 1, 0}},
-    {{0, 0, 0, 0}}
-}};
+constexpr Shape J = {
+    {{{0, 0, 0, 0}}, {{1, 0, 0, 0}}, {{1, 1, 1, 0}}, {{0, 0, 0, 0}}}};
 
-constexpr Shape L = {{
-    {{0, 0, 0, 0}},
-    {{0, 0, 1, 0}},
-    {{1, 1, 1, 0}},
-    {{0, 0, 0, 0}}
-}};
+constexpr Shape L = {
+    {{{0, 0, 0, 0}}, {{0, 0, 1, 0}}, {{1, 1, 1, 0}}, {{0, 0, 0, 0}}}};
 
-}
+} // namespace TetrisShapes
 
 #endif

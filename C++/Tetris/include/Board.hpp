@@ -13,9 +13,7 @@ public:
 
   int clearRows();
 
-  int (&getBoard())[Constants::ROWS][Constants::COLS] {
-    return board;
-  }
+  int (&getBoard()) [Constants::ROWS][Constants::COLS] { return board; }
 
   const std::vector<Color> &getColors() {
     return colors;

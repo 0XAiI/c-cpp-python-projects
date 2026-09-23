@@ -216,4 +216,4 @@ void Game::render(bool &running) {
   window.display();
 }
 
-}
+} // namespace pacman

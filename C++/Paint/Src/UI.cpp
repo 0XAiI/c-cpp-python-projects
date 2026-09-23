@@ -17,9 +17,9 @@ namespace {
 constexpr int NUM_COLORS = 9;
 constexpr int FPS_DELAY = 16;
 constexpr uint32_t BG_COLOR = 0x000000FF;
-}
+} // namespace
 
-const std::string UI::Icon_Path = "../Icon/icon.png";
+const std::string UI::Icon_Path = "./Icon/icon.png";
 
 UI::UI() {
   window = nullptr;
@@ -302,4 +302,3 @@ void UI::Run() {
     SDL_Delay(FPS_DELAY);
   }
 }
-

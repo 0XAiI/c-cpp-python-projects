@@ -216,9 +216,8 @@ void check_matches(int board[GRID_SIZE][GRID_SIZE], GameState *state,
     board[i + 1][j] = ' ';
     board[i][j + 1] = ' ';
     board[i + 1][j + 1] = ' ';
-  }
-  else if (i < GRID_SIZE - 2 && board[i][j] != ' ' &&
-           board[i][j] == board[i + 1][j] && board[i][j] == board[i + 2][j]) {
+  } else if (i < GRID_SIZE - 2 && board[i][j] != ' ' &&
+             board[i][j] == board[i + 1][j] && board[i][j] == board[i + 2][j]) {
 
     StopMusicStream(*music);
     PlayMusicStream(*music);
@@ -226,9 +225,8 @@ void check_matches(int board[GRID_SIZE][GRID_SIZE], GameState *state,
 
     state->score += MATCH_3_SCORE;
     board[i][j] = board[i + 1][j] = board[i + 2][j] = ' ';
-  }
-  else if (j < GRID_SIZE - 2 && board[i][j] != ' ' &&
-           board[i][j] == board[i][j + 1] && board[i][j] == board[i][j + 2]) {
+  } else if (j < GRID_SIZE - 2 && board[i][j] != ' ' &&
+             board[i][j] == board[i][j + 1] && board[i][j] == board[i][j + 2]) {
 
     StopMusicStream(*music);
     PlayMusicStream(*music);

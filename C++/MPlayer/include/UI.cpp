@@ -56,7 +56,8 @@ static bool music_dir_exists(const std::string &dir) {
 
 static std::string pick_track_via_fzf(const std::string &dir) {
   const std::string cmd =
-      "ls -1 \"" + dir + "\" | "
+      "ls -1 \"" + dir +
+      "\" | "
       "grep -Ei '\\.(mp3|wav|flac|ogg|mp4|webm|m4a|aac|opus|aiff)$' | "
       "fzf --header=\"Pick a track from ~/Music (Esc -> type a path)\"";
 
@@ -69,8 +70,7 @@ static std::string pick_track_via_fzf(const std::string &dir) {
   std::string name;
   if (fgets(buf, sizeof(buf), pipe) != NULL) {
     name = buf;
-    while (!name.empty() &&
-           (name.back() == '\n' || name.back() == '\r')) {
+    while (!name.empty() && (name.back() == '\n' || name.back() == '\r')) {
       name.pop_back();
     }
   }

@@ -1,3 +1,6 @@
 Accuracy : 100.00
 WordPerSecond: : 40.86
 WrongWords: 0
+Accuracy : 0.00
+WordPerSecond: 60.00
+WrongWords: 6

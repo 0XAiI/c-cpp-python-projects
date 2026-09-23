@@ -40,7 +40,7 @@ void Cleanup() {
   CloseAudioDevice();
   CloseWindow();
 }
-}
+} // namespace
 
 int main(void) {
   srand(time(NULL));

@@ -162,11 +162,10 @@ bool translate_text(const char *text, const char *source, const char *output) {
   }
 
   char url[MAX_URL_LEN];
-  int url_len =
-      snprintf(url, sizeof(url),
-               "https://translate.googleapis.com/translate_a/"
-               "single?client=gtx&sl=%s&tl=%s&dt=t&q=%s",
-               source, output, encoded_text);
+  int url_len = snprintf(url, sizeof(url),
+                         "https://translate.googleapis.com/translate_a/"
+                         "single?client=gtx&sl=%s&tl=%s&dt=t&q=%s",
+                         source, output, encoded_text);
   if (url_len < 0 || (size_t)url_len >= sizeof(url)) {
     fprintf(stderr, "Input text too long to build a valid request URL\n");
     free(chunk.memory);

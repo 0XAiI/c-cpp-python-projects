@@ -12,7 +12,7 @@ namespace {
 Sound g_explosionSound;
 
 bool isSoundValid(Sound sound) { return sound.frameCount > 0; }
-}
+} // namespace
 
 Game::Game() {
   loadFont();

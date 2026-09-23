@@ -1,4 +1,5 @@
 #include "../include/Map.hpp"
+
 namespace pacman {
 const std::vector<std::string> Map::DEFAULT_MAP = {
     "############################", "#............##............#",
@@ -155,4 +156,4 @@ bool Map::isWalkableTile(const sf::Vector2i &tile) const {
   return map[tile.y][tile.x] != '#';
 }
 
-}
+} // namespace pacman

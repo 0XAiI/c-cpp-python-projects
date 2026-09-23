@@ -8,8 +8,8 @@ extern "C" {
 #include "Game.hpp"
 #include "UI.hpp"
 #include <SDL2/SDL_ttf.h>
-#include <string>
 #include <iostream>
+#include <string>
 
 static ma_engine engine;
 static bool audio_init = false;
@@ -203,13 +203,11 @@ void Game::Game_Update(SDL_FRect Current_Pos[2]) {
   Handle_Collision(ui->Rect2, Current_Pos[1]);
 
   if (Rect_Collision_Ball(&ui->Rect1, &ui->ball)) {
-    ui->ball.velX =
-        -std::abs(ui->ball.velX);
+    ui->ball.velX = -std::abs(ui->ball.velX);
     Play_Sound();
   }
   if (Rect_Collision_Ball(&ui->Rect2, &ui->ball)) {
-    ui->ball.velX =
-        std::abs(ui->ball.velX);
+    ui->ball.velX = std::abs(ui->ball.velX);
     Play_Sound();
   }
   if (ui->winner.player1 || ui->winner.player2) {

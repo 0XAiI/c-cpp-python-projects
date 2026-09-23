@@ -102,4 +102,4 @@ void Pacman::loseLife() {
   }
 }
 
-}
+} // namespace pacman

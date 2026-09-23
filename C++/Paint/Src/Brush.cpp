@@ -7,7 +7,7 @@ namespace {
 constexpr int DEFAULT_CENTER_X = 395;
 constexpr int DEFAULT_CENTER_Y = 345;
 constexpr int DEFAULT_RADIUS = 8;
-}
+} // namespace
 
 void Brush::Init_Brush() {
   brush_struct.Center_X = DEFAULT_CENTER_X;

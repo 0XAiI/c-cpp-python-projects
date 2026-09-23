@@ -155,4 +155,4 @@ void Entity::drawUI(sf::RenderWindow &window, GameState &gameState,
   utils.handleMenuSelection(window, gameState, running, menuTexts.data());
 }
 
-}
+} // namespace pacman

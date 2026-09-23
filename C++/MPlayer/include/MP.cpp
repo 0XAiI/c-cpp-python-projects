@@ -17,7 +17,7 @@ constexpr float DEFAULT_VOLUME = 20.0f;
 constexpr float SPEED_NORMAL = 1.0f;
 constexpr float SPEED_FAST = 1.5f;
 constexpr float SPEED_SLOW = 0.5f;
-}
+} // namespace
 
 void MPlayer::drawText(sf::RenderWindow &window) {
   if (!fontLoaded) {
